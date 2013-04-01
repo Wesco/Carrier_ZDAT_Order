@@ -13,7 +13,8 @@ Sub ImportOrder()
     Dim iRows As Long
     Dim i As Long
 
-    sPath = "\\BR3615GAPS\GAPS\Carrier\Carrier Order Entry\Carrier Order " & Format(Date, "mm-dd-yy") & ".xls"
+    'sPath = "\\BR3615GAPS\GAPS\Carrier\Carrier Order Entry\Carrier Order " & Format(Date, "mm-dd-yy") & ".xls"
+    sPath = "\\BR3615GAPS\GAPS\Carrier\Carrier Order Entry\" & Format(Date, "mm-dd-yy") & ".xls"
 
     Application.ScreenUpdating = False
     Application.DisplayAlerts = False
