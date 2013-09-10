@@ -1,26 +1,32 @@
 Attribute VB_Name = "Program"
 Option Explicit
 
-Public Function FileExists(ByVal sPath As String) As Boolean
-    'Remove trailing backslash
-    If InStr(Len(sPath), sPath, "\") > 0 Then sPath = Left(sPath, Len(sPath) - 1)
-    'Check to see if the directory exists and return true/false
-    If Dir(sPath, vbDirectory) <> "" Then FileExists = True
-End Function
-
 Sub ImportOrder()
+    Dim Found As Boolean
+    Dim Result As Long
     Dim sPath As Variant
     Dim iRows As Long
     Dim i As Long
 
-    'sPath = "\\BR3615GAPS\GAPS\Carrier\Carrier Order Entry\Carrier Order " & Format(Date, "mm-dd-yy") & ".xls"
-    sPath = "\\BR3615GAPS\GAPS\Carrier\Carrier Order Entry\" & Format(Date, "mm-dd-yy") & ".xls"
+
+    For i = 0 To 30
+        sPath = "\\BR3615GAPS\GAPS\Carrier\Carrier Order Entry\" & Format(Date - i, "mm-dd-yy") & ".xls"
+        If FileExists(sPath) Then
+            Found = True
+            Exit For
+        End If
+    Next
+
+    If Found And i > 0 Then
+        Result = MsgBox("An order from " & Format(Date - i, "mmm dd, yyyy") & " was found." & vbCrLf & _
+                        vbCrLf & "Would you like to continue?", vbYesNo)
+    End If
 
     Application.ScreenUpdating = False
     Application.DisplayAlerts = False
     Application.AskToUpdateLinks = False
 
-    If FileExists(sPath) = True Then
+    If Found = True And i = 0 Or Result = vbYes And Found = True Then
         Sheets("Sheet1").Select
         Workbooks.Open sPath
         Sheets("ORDER PAGE").Select
@@ -68,7 +74,7 @@ Sub ImportOrder()
         ActiveWorkbook.Close
         ActiveSheet.Cells.Delete
         MsgBox "Complete!"
-    Else
+    ElseIf Found = False Then
         MsgBox "Order not found!"
     End If
 
