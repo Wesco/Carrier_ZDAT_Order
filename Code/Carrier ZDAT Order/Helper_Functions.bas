@@ -134,7 +134,7 @@ Function ImportGaps() As Boolean
     StartTime = Timer
     dt = Date - iCounter
     sPath = "\\br3615gaps\gaps\3615 Gaps Download\" & Format(dt, "yyyy") & "\"
-    sName = "3615 " & Format(dt, "m-dd-yy") & ".xlsx"
+    sName = "3615 " & Format(dt, "m-dd-yy") & ".csv"
     FileFound = False
 
     'This error is bypassed so you can determine whether or not the sheet exists
@@ -148,7 +148,7 @@ Function ImportGaps() As Boolean
     For iCounter = 0 To 15
         dt = Date - iCounter
         sPath = "\\br3615gaps\gaps\3615 Gaps Download\" & Format(dt, "yyyy") & "\"
-        sName = "3615 " & Format(dt, "m-dd-yy") & ".xlsx"
+        sName = "3615 " & Format(dt, "m-dd-yy") & ".csv"
         If FileExists(sPath & sName) Then
             FileFound = True
             Exit For
